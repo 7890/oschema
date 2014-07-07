@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!-- minimal valid oscdoc instance -->
+<!-- param_X -->
+<osc_unit format_version="1.0">
+	<meta>
+		<name>a_prog</name>
+		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
+		<doc_origin>http://where.to/?find=this&amp;xml_file</doc_origin>
+	</meta>
+	<message_in pattern="/a/path/in" typetag="X">
+		<param_X symbol="s_i1" units="free-style units">
+			<desc>optional desc 1</desc>
+			<desc>optional desc 2</desc>
+			<custom>c1</custom>
+			<custom>c2</custom>
+		</param_X>
+	</message_in>
+	<message_in pattern="/b/path/in" typetag="X">
+		<param_X symbol="s_i1"/>
+	</message_in>
+
+<!-- the same for out messages -->
+	<message_out pattern="/b/path/out" typetag="X">
+		<param_X symbol="s_i1" units="meter">
+			<desc>optional desc 1</desc>
+			<desc>optional desc 2</desc>
+			<custom>c1</custom>
+			<custom>c2</custom>
+		</param_X>
+	</message_out>
+	<message_out pattern="/c/path/out" typetag="X">
+		<param_X symbol="s_i1"/>
+	</message_out>
+</osc_unit>
+
+<!--
+<param_X symbol="" units="">
+	<desc></desc>
+	<custom></custom>
+</param_X>
+-->

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!-- minimal valid oscdoc instance -->
+<!-- param_b, attributes -->
+<osc_unit format_version="1.0">
+	<meta>
+		<name>a_prog</name>
+		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
+		<doc_origin>http://where.to/?find=this&amp;xml_file</doc_origin>
+	</meta>
+	<message_in pattern="/a/path/in" typetag="b">
+		<param_b symbol="s_i1" units="free-style units">
+			<desc>optional desc 1</desc>
+			<desc>optional desc 2</desc>
+			<custom>c1</custom>
+			<custom>c2</custom>
+		</param_b>
+	</message_in>
+<!-- attributes -->
+	<message_in pattern="/b/path/in" typetag="b">
+		<param_b symbol="s_i1" min_size="5"/>
+	</message_in>
+	<message_in pattern="/c/path/in" typetag="b">
+		<param_b symbol="s_i1" max_size="20"/>
+	</message_in>
+	<message_in pattern="/d/path/in" typetag="b">
+		<param_b symbol="s_i1" min_size="5" max_size="20" units="special units" />
+	</message_in>
+<!-- the same for out messages -->
+
+	<message_out pattern="/a/path/out" typetag="b">
+		<param_b symbol="s_i1" units="free-style units">
+			<desc>optional desc 1</desc>
+			<desc>optional desc 2</desc>
+			<custom>c1</custom>
+			<custom>c2</custom>
+		</param_b>
+	</message_out>
+<!-- attributes, whitelist -->
+	<message_out pattern="/b/path/out" typetag="b">
+		<param_b symbol="s_i1" min_size="5"/>
+	</message_out>
+	<message_out pattern="/c/path/out" typetag="b">
+		<param_b symbol="s_i1" max_size="20"/>
+	</message_out>
+	<message_out pattern="/d/path/out" typetag="b">
+		<param_b symbol="s_i1" min_size="5" max_size="20" units="special units" />
+	</message_out>
+</osc_unit>
+
+<!--
+<param_b symbol="" min_size="" max_size="" units="">
+	<desc><desc>
+	<custom><custom>
+</param_b>
+-->

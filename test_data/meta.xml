@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!-- minimal valid oscdoc instance -->
+<!-- meta -->
+<osc_unit format_version="1.0">
+	<meta>
+		<name>a_prog</name>
+		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
+		<doc_origin>http://where.to/?find=this&amp;xml_file</doc_origin>
+		<author>
+                        <firstname>first</firstname>
+                        <lastname>last</lastname>
+                        <email>john@there</email>
+                </author>
+		<url>http://just.an/optional/url</url>
+		<url>http://pointing.to/source/of/prog</url>
+		<desc>optional description 1</desc>
+		<desc>note: custom elements can be at several places in a oschema doc</desc>
+		<custom it="could not">be
+			<more>custom</more>
+		</custom>
+		<custom>
+			<another>arbitrary data structure</another>
+		</custom>
+	</meta>
+</osc_unit>
+
+<!--
+<meta>
+	<name></name>
+	<uri></uri>
+	<doc_origin></doc_origin>
+	<author>
+		<firstname></firstname>
+		<lastname></lastname>
+		<email></email>
+	</author>
+	<url></url>
+	<desc></desc>
+	<custom></custom>
+</meta>
+-->

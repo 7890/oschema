@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!-- minimal valid oscdoc instance -->
+<!-- meta/author -->
+<osc_unit format_version="1.0">
+	<meta>
+		<name>a_prog</name>
+		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
+		<doc_origin>http://where.to/?find=this&amp;xml_file</doc_origin>
+		<author>
+<!-- using all available elements -->
+                        <firstname>first</firstname>
+                        <lastname>last</lastname>
+                        <email>john@there</email>
+                </author>
+<!-- multiple authors -->
+		<author>
+<!-- using only one elements -->
+                        <email>john@there</email>
+                </author>
+		<author>
+<!-- alternative ordered elements -->
+                        <email>john@there</email>
+                        <lastname>last</lastname>
+                </author>
+	</meta>
+</osc_unit>
+
+<!--
+<author>
+	<firstname></firstname>
+	<lastname></lastname>
+	<email></email>
+</author>
+-->

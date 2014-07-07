@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- minimal valid oscdoc instance -->
+<!-- minimal message_in -->
+<osc_unit format_version="1.0">
+	<meta>
+		<name>a_prog</name>
+		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
+		<doc_origin>http://where.to/?find=this&amp;xml_file</doc_origin>
+	</meta>
+	<message_in pattern="/" typetag=""/>
+</osc_unit>
+
+<!--
+<message_in pattern="" typetag="">
+</message_in>
+-->

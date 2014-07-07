@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!-- valid oscdoc instance with message and minimal parameters -->
+<osc_unit format_version="1.0">
+	<meta>
+		<name>title</name>
+		<uri>aaa://bb.cc/</uri>
+		<doc_origin>xx://yy.zz/?a=b&amp;xml</doc_origin>
+	</meta>
+	<message_in pattern="/a/path" typetag="f">
+		<param_i symbol="s1"/>
+	</message_in>
+</osc_unit>

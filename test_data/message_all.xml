@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!-- minimal valid oscdoc instance -->
+<!-- message_in, parameters -->
+<osc_unit format_version="1.0">
+	<meta>
+		<name>a_prog</name>
+		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
+		<doc_origin>http://where.to/?find=this&amp;xml_file</doc_origin>
+	</meta>
+	<message_in pattern="/a/path/in" typetag="ihfdsbX">
+		<desc>optional desc 1</desc>
+		<desc>optional desc 2</desc>
+		<custom>c1</custom>
+		<custom>c2</custom>
+<!-- multiple minimal parameters -->
+		<param_i symbol="s_i1"/>
+		<param_h symbol="s_h1"/>
+		<param_f symbol="s_f1"/>
+		<param_d symbol="s_d1"/>
+		<param_s symbol="s_s1"/>
+		<param_b symbol="s_b1"/>
+		<param_X symbol="s_X1"/>
+	</message_in>
+	<message_out pattern="/b/path/out" typetag="ihfdsbX">
+		<desc>optional desc 1</desc>
+		<desc>optional desc 2</desc>
+		<custom>c1</custom>
+		<custom>c2</custom>
+<!-- multiple minimal parameters -->
+		<param_i symbol="s_i1"/>
+		<param_h symbol="s_h1"/>
+		<param_f symbol="s_f1"/>
+		<param_d symbol="s_d1"/>
+		<param_s symbol="s_s1"/>
+		<param_b symbol="s_b1"/>
+		<param_X symbol="s_X1"/>
+	</message_out>
+</osc_unit>
+
+<!--
+-->

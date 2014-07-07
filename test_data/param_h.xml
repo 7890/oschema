@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!-- minimal valid oscdoc instance -->
+<!-- param_h, ranges -->
+<osc_unit format_version="1.0">
+	<meta>
+		<name>a_prog</name>
+		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
+		<doc_origin>http://where.to/?find=this&amp;xml_file</doc_origin>
+	</meta>
+	<message_in pattern="/a/path/in" typetag="h">
+		<param_h symbol="s_i1" units="free-style units">
+			<desc>optional desc 1</desc>
+			<desc>optional desc 2</desc>
+			<custom>c1</custom>
+			<custom>c2</custom>
+		</param_h>
+	</message_in>
+<!-- ranges -->
+	<message_in pattern="/b/path/in" typetag="h">
+		<param_h symbol="s_i1">
+			<range_min_max min="0" max="10"/>
+		</param_h>
+	</message_in>
+	<message_in pattern="/c/path/in" typetag="h">
+		<param_h symbol="s_i1">
+			<range_min_inf min="0" default="3"/>
+		</param_h>
+	</message_in>
+	<message_in pattern="/d/path/in" typetag="h">
+		<param_h symbol="s_i1">
+			<range_inf_max max="10" default="3"/>
+		</param_h>
+	</message_in>
+	<message_in pattern="/e/path/in" typetag="h">
+		<param_h symbol="s_i1">
+			<range_inf_inf default="3"/>
+		</param_h>
+	</message_in>
+<!-- the same for out messages -->
+	<message_out pattern="/b/path/out" typetag="h">
+		<param_h symbol="s_i1" units="meter">
+			<desc>optional desc 1</desc>
+			<desc>optional desc 2</desc>
+			<custom>c1</custom>
+			<custom>c2</custom>
+		</param_h>
+	</message_out>
+	<message_out pattern="/c/path/out" typetag="h">
+		<param_h symbol="s_i1">
+			<range_min_max min="0" max="10" default="3"/>
+		</param_h>
+	</message_out>
+	<message_out pattern="/d/path/out" typetag="h">
+		<param_h symbol="s_i1">
+			<range_min_inf min="0" default="3"/>
+		</param_h>
+	</message_out>
+	<message_out pattern="/e/path/out" typetag="h">
+		<param_h symbol="s_i1">
+			<range_inf_max max="10" default="3"/>
+		</param_h>
+	</message_out>
+	<message_out pattern="/f/path/out" typetag="h">
+		<param_h symbol="s_i1">
+			<range_inf_inf default="3"/>
+		</param_h>
+	</message_out>
+</osc_unit>
+
+<!--
+
+<range_min_max min="" max="" default="">
+</range_min_max>
+
+<range_min_inf min="" default="">
+</range_min_inf>
+
+<range_inf_max max="" default="">
+</range_inf_max>
+
+<range_inf_inf default="">
+</range_inf_inf>
+
+-->

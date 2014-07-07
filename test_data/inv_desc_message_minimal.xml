@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!-- minimal valid oscdoc instance with message 1 -->
+<osc_unit>
+	<meta>
+		<name>title</name>
+	</meta>
+<!-- unknown typetag, unknown direction -->
+	<message_in pattern="_a/inval" typetag="Z">
+	</message_in>
+</osc_unit>

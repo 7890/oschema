@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!-- invalid oscdoc instance -->
+<osc_unit>
+	<meta>
+		<name>title</name>
+	</meta>
+	<message_in pattern="/a/path" typetag="i">
+		<param_i symbol="s1">
+<!-- min_max needs min, max, default attributes -->
+			<range_min_max min="-5" default="2"/>
+		</param_i>
+		<param_i symbol="s1">
+<!-- min_max needs min, max, default attributes -->
+			<range_min_max max="5"/>
+		</param_i>
+		<param_i symbol="s1">
+<!-- attributes type must be int -->
+			<range_min_max min="-5" max="5.5" default="2.4"/>
+		</param_i>
+
+		<param_i symbol="s1">
+			<range_min_inf min="-5" default="4">
+<!-- !=min_max can not contain grid -->
+				<grid>
+					<point symbol="p1" value="3">P1</point>
+				</grid>
+			</range_min_inf>
+		</param_i>
+		<param_i symbol="s1">
+			<range_min_max min="-5" max="5" default="0">
+<!-- min_max can not contain hints -->
+				<hints>
+					<point symbol="p1" value="3">P1</point>
+				</hints>
+			</range_min_max>
+		</param_i>
+
+		<param_f symbol="s1">
+<!-- limits lmin, lmax missing (float range) -->
+			<range_min_max min="-5.5" max="5.2" default="33">
+			</range_min_max>
+		</param_f>
+	</message_in>
+</osc_unit>

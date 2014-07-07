@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!-- minimal valid oscdoc instance -->
+<!-- grid, point -->
+<osc_unit format_version="1.0">
+	<meta>
+		<name>a_prog</name>
+		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
+		<doc_origin>http://where.to/?find=this&amp;xml_file</doc_origin>
+	</meta>
+
+	<message_in pattern="/a/path/in" typetag="i">
+		<param_i symbol="s_i1">
+			<range_min_max min="0" max="10" default="3">
+				<grid>
+					<point symbol="s_p1" value="5"/>
+				</grid>
+			</range_min_max>
+		</param_i>
+	</message_in>
+	<message_in pattern="/b/path/in" typetag="i">
+		<param_i symbol="s_i1">
+			<range_min_max min="0" max="10" default="3">
+				<grid>
+					<point symbol="s_p1" value="5">Point s_p1 Human</point>
+					<point symbol="s_p2" value="8">Point s_p2 Human</point>
+				</grid>
+			</range_min_max>
+		</param_i>
+	</message_in>
+
+	<message_out pattern="/a/path/out" typetag="i">
+		<param_i symbol="s_i1">
+			<range_min_max min="5" max="10" default="8">
+				<grid>
+					<point symbol="s_p1" value="5"/>
+				</grid>
+			</range_min_max>
+		</param_i>
+	</message_out>
+	<message_out pattern="/b/path/out" typetag="i">
+		<param_i symbol="s_i1">
+			<range_min_max min="5" max="8" default="5">
+				<grid>
+					<point symbol="s_p1" value="5">Point s_p1 Human</point>
+					<point symbol="s_p2" value="8">Point s_p2 Human</point>
+				</grid>
+			</range_min_max>
+		</param_i>
+	</message_out>
+
+</osc_unit>
+
+<!--
+<grid>
+	<point symbol="" value=""></point>
+	<point symbol="" value=""></point>
+</grid>
+-->

@@ -1,0 +1,13 @@
+http://sourceforge.net/projects/xs3p/
+Wed Jun 25 16:04:05 CEST 2014
+
+xs3p.xsl:
+
+6325a6326,6328
+> 
+> //tb/140615  added disable-output-escaping=yes for using <pre> in xs:documentation
+> 
+6328c6331
+<       <xsl:value-of select="."/>
+---
+>       <xsl:value-of select="." disable-output-escaping="yes"/>

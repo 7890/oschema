@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<!-- valid oscdoc instance -->
+<osc_unit format_version="1.0">
+	<meta>
+		<name>title</name>
+		<uri>aaa://bb.cc/</uri>
+		<doc_origin>xx://yy.zz/?a=b&amp;xml</doc_origin>
+
+		<custom>
+			asfsd sad sfds 
+			<super>aaa
+	<b>
+		<ccc></ccc>
+	</b>
+
+			</super>
+		</custom>
+
+		<custom>
+			2222222
+			<super>bbb</super>
+		</custom>
+
+	</meta>
+
+	<doc>
+		<h2>hello</h2>
+<h3>aaa</h3>
+<div class="ascii">
+		<pre>
+        |
+         \_____***</pre>
+</div>
+<div class="ascii">
+		<pre>
+        |
+         \_____***</pre>
+</div>
+<p>text lorum lalalal</p>
+<p>text2 lorum lalalal</p>
+text<br/>
+text<br/>
+
+	</doc>
+
+	<message_in pattern="/first/message" typetag="iihfdsXf">
+		<desc>desc 1 msg1</desc>
+		<desc>desc 2 msg1</desc>
+
+		<custom>
+			asfsd sad sfds 
+			<super>aaa</super>
+		</custom>
+
+		<param_i symbol="s1_param_i" units="myunits">
+			<desc>desc 1 s1 param_i</desc>
+			<desc>desc 2 s1 param_i</desc>
+			<custom>
+				asfsd sad sfds 
+				<super>aaa</super>
+			</custom>
+
+			<range_min_max min="-5" max="10" default="0">
+				<hints>
+					<point symbol="p1_s1_param_i_min_max" value="3">P1 s1 param_i min max</point>
+					<point symbol="p2_s1_param_i_min_max" value="5">P2 s1 param_i min max</point>
+				</hints>
+			</range_min_max>
+		</param_i>
+
+		<param_i symbol="s2_param_i">
+			<desc>desc 1 s2 param_i</desc>
+			<range_min_inf min="-5" default="9">
+				<hints>
+					<point symbol="p1_s2_param_i_min" value="3">P1 s2 param_i min</point>
+					<point symbol="p2_s2_param_i_min" value="5">P2 s2 param_i min</point>
+				</hints>
+			</range_min_inf>
+		</param_i>
+
+		<param_h symbol="s3_param_h">
+			<range_min_inf min="-5" default="0"> 
+				<hints>
+					<point symbol="p1" value="3">P1</point>
+					<point symbol="p2" value="5">P2</point>
+				</hints>
+			</range_min_inf>
+		</param_h>
+
+		<param_f symbol="s4_param_f" units="gugus" logarithmic="1">
+			<range_min_max min="-5.5" lmin="[" max="10.1" lmax="]" default="3.4534">
+				<grid>
+					<point symbol="p1" value="3.3">P1</point>
+					<point symbol="p2" value="5.5">P2</point>
+				</grid>
+			</range_min_max>
+		</param_f>
+
+		<param_d symbol="s5_param_d" units="gugus" logarithmic="1">
+			<range_min_max min="-5.5" lmin="[" max="10.1" lmax="]" default="-2.234234234">
+				<grid>
+					<point symbol="p1" value="3.3">P1</point>
+					<point symbol="p2" value="5.5">P2</point>
+				</grid>
+			</range_min_max>
+		</param_d>
+
+		<param_s symbol="s6_param_s" min_length="10" max_length="20" regex="aaa" default="sssss">
+			<whitelist>
+				<token>Token1</token>
+				<token>Token2</token>
+			</whitelist>
+		</param_s>
+
+		<param_X symbol="bbbimbol">
+			<custom><content/>here
+			<a>
+			and anywhere<b></b>
+			</a>
+			</custom>
+		</param_X>
+
+
+		<param_f symbol="sx_param_f" units="gugus" logarithmic="1">
+			<range_min_max min="-5.5" lmin="[" max="10.1" lmax="]" default="3.4534">
+			</range_min_max>
+		</param_f>
+
+	</message_in>
+
+	<message_in pattern="/a/path" typetag="i">
+		<param_i symbol="second_in_msg">
+		</param_i>
+	</message_in>
+
+
+
+
+	<message_in pattern="/test/string" typetag="s">
+		<desc>test desc</desc>
+		<param_s symbol="gugus" min_length="4" max_length="8" regex="2asjsdfjl" default="default">
+			<desc>desc here</desc>
+			<whitelist>
+				<token>aaa</token>
+				<token>bbb</token>
+			</whitelist>
+		</param_s>
+	</message_in>
+
+
+	<message_in pattern="/unknown/param" typetag="X">
+		<desc>test desc</desc>
+		<param_X symbol="gugus">
+			<desc>desc here</desc>
+		</param_X>
+	</message_in>
+
+
+	<message_in pattern="/byte/param" typetag="b">
+		<desc>test desc</desc>
+		<param_b symbol="gugus" min_size="0" max_size="23" units="bytes">
+			<desc>agus  s s dsffsd dsf fds f</desc>
+		</param_b>
+	</message_in>
+
+
+	<message_out pattern="/a/path" typetag="i">
+
+		<param_i symbol="gugus"/>
+	</message_out>
+
+	<message_out pattern="/a/path" typetag=""/>
+
+	<message_out pattern="/b/path" typetag="">
+
+<condition type="on_request">
+<desc>aaa</desc>
+<desc>bbb</desc>
+
+</condition>
+
+<target type="hardcoded" proto="TCP">
+<desc>aaaa</desc>
+<custom>
+</custom>
+</target>
+<target type="hardcoded">
+<desc>bbbb</desc>
+<custom>
+</custom>
+</target>
+
+	</message_out>
+
+
+</osc_unit>
