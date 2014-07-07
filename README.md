@@ -149,7 +149,7 @@ Workflow, Chains
    oschema2html.xsl          -> Easy integration to existing project
                              -> Small distributable
 .______________________
-|me@wheel:~/oscdoc$ make.sh
+|me@wheel:~/oscdoc$ oscdoc unit.xml /tmp
 |...
 .---------------------
 
