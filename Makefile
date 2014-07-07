@@ -2,7 +2,6 @@ PREFIX ?= /usr/local
 INSTALLDIR ?= $(PREFIX)/bin
 
 SRC = src
-BLD = build
 DOC = doc
 DIST = dist
 
@@ -26,22 +25,22 @@ doc: $(SRC)/oschema.xsd
 	@echo "tools needed: java, xmlstarlet"
 	@echo ""
 
-	mkdir -p $(BLD) \
-	&& cd $(BLD) \
+	cd $(DOC) \
 	&& echo ""; echo "creating svg..." \
 	&& java -jar ../$(LIB)/xsdvi.jar ../$(SRC)/oschema.xsd >/dev/null 2>&1 \
 	&& echo "creating html..." \
 	&& xmlstarlet tr ../$(LIB)/xs3p.xsl ../$(SRC)/oschema.xsd > oschema.html \
+	&& rm xsdvi.log \
 	&& cd ..
 
 	@echo ""
-	@echo "output: $(BLD)/oschema.svg"
-	@echo "output: $(BLD)/oschema.html"
+	@echo "output: $(DOC)/oschema.svg"
+	@echo "output: $(DOC)/oschema.html"
 	@echo ""
 	@echo "done."
 	@echo ""
 
-dist: $(BLD)/oschema.svg $(BLD)/oschema.html
+dist: $(DOC)/oschema.svg $(DOC)/oschema.html
 
 	@echo ""
 	@echo "creating tarball for distribution"
@@ -51,8 +50,8 @@ dist: $(BLD)/oschema.svg $(BLD)/oschema.html
 	mkdir -p $(DIST)/oschema-1.0
 	cp $(SRC)/oschema.xsd $(DIST)/oschema-1.0
 	cp $(SRC)/oschema_validate.sh $(DIST)/oschema-1.0
-	cp $(BLD)/oschema.svg $(DIST)/oschema-1.0
-	cp $(BLD)/oschema.html $(DIST)/oschema-1.0
+	cp $(DOC)/oschema.svg $(DIST)/oschema-1.0
+	cp $(DOC)/oschema.html $(DIST)/oschema-1.0
 	cp $(TEST)/minimal.xml $(DIST)/oschema-1.0
 
 	cd $(DIST) && \
@@ -122,12 +121,10 @@ uninstall:
 clean:
 
 	@echo ""
-	@echo "cleaning up $(BLD) directory"
-	@echo "---------------------------"
+	@echo "cleaning up $(DIST) directory"
+	@echo "-----------------------------"
 	@echo ""
 
-	mkdir -p $(BLD)
-	rm -f ./$(BLD)/*
 	mkdir -p $(DIST)
 	rm -rf ./$(DIST)/oschema-1.0
 	rm -f ./$(DIST)/*
