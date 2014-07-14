@@ -10,6 +10,33 @@ elementFormDefault="qualified">
 =============================================
 Revision history
 
+-20140714       v1.1    tom@trellis.ch
+Make message_[in|out]@pattern more like a pattern 
+allowing * (type_osc_pattern)
+
+Allow * in typetags (type_osc_typetag)
+
+Both uses of '*' create ambiguity that is left to 
+describe in the 'desc' and 'custom' elements
+
+New attributes for message_[in|out]: uri, url
+uri: pointing to an existing oschema defined "namespace"
+url: pointing to the oschema instance document containing 
+the definition
+
+This allows to use already defined OSC message designs 
+(path + typetag) as a subtree of a given path of the 
+unit being described. The idea was to support  
+re-usable aspects that OSC units share. It means 
+these units agreed on semantics of path+typetag for 
+a specific purpose (i.e. "transport control").
+
+All v1.0 instance documents are still within the valid 
+domain with these additions. However v1.1 instances will 
+be invalid when tested against v1.0 schema. To prevent 
+this, use the current v1.1 schema (that adds v1.1 as 
+valid format version).
+
 -20140707	v1.0	tom@trellis.ch
 Initial release. Not every type is fully documented yet.
 
@@ -205,6 +232,11 @@ css, js etc.
     </xs:sequence>
     <xs:attribute name="pattern" type="type_osc_pattern" use="required"/>
     <xs:attribute name="typetag" type="type_osc_typetag" use="required"/>
+
+<!-- re-use existing definition.  -->
+    <xs:attribute name="uri" type="type_osc_unit_path" use="optional"/>
+    <xs:attribute name="url" type="type_osc_url" use="optional"/>
+
   </xs:complexType>
 <!-- ============================================= -->
   <xs:complexType name="type_osc_message_out" mixed="true">
@@ -229,6 +261,11 @@ css, js etc.
     </xs:sequence>
     <xs:attribute name="pattern" type="type_osc_pattern" use="required"/>
     <xs:attribute name="typetag" type="type_osc_typetag" use="required"/>
+
+<!-- re-use existing definition.  -->
+    <xs:attribute name="uri" type="type_osc_unit_path" use="optional"/>
+    <xs:attribute name="url" type="type_osc_url" use="optional"/>
+
   </xs:complexType>
 <!-- ============================================= -->
   <xs:simpleType name="type_osc_typetag">
@@ -260,10 +297,18 @@ for example:
 
 &apos;X&apos; expresses unknown / custom shaped param
 
+&apos;*&apos; a shortcut for X_, not even requiring a parameter_X and parameter__ element
+example use:
+pattern: /prefix/*
+typetag: *
+uri: ...
+url: ...
+this means all below /prefix is defined by namespace uri, accessible at url
+
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="([ihfdsbX]*)|([ihfdsbX]{1,}[_]?)"/>
+      <xs:pattern value="([ihfdsbX]*)|([ihfdsbX]{1,}[_]?)|([*])"/>
     </xs:restriction>
   </xs:simpleType>
 <!-- ============================================= -->
@@ -277,6 +322,7 @@ for example:
       <xs:pattern value="[ihfdsbX]{1}"/>
     </xs:restriction>
   </xs:simpleType>
+
   <xs:simpleType name="type_osc_pattern">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
@@ -291,10 +337,17 @@ Valid pattern examples:
 /standard/case
 /a_b/c-d/123.4
 #foo
+
+pattern: /prefix/*
+typetag: *
+uri: ...
+url: ...
+this means all below /prefix is defined by namespace uri, accessible at url
+
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="/|#|((/|#)[a-zA-Z0-9./_-]*[^/])"/>
+      <xs:pattern value="/|#|((/|#)[*a-zA-Z0-9./_-]*[^/])"/>
     </xs:restriction>
   </xs:simpleType>
 <!-- ============================================= -->
@@ -377,6 +430,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
     </xs:annotation>
     <xs:restriction base="xs:decimal">
       <xs:enumeration value="1.0"/>
+      <xs:enumeration value="1.1"/>
     </xs:restriction>
   </xs:simpleType>
 <!-- ============================================= -->

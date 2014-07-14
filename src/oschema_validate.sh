@@ -97,7 +97,7 @@ validate()
 check_typetag_param_count()
 {
 #typetag length = param count
-xmlstarlet sel -t -m "//*[starts-with(name(.),'message_')]" \
+xmlstarlet sel -t -m "//*[starts-with(name(.),'message_') and not(contains(@typetag,'*'))]" \
 -v "name(.)" -o " " -v @pattern -o " " -v @typetag -o " typetag len:" \
 -v "string-length(@typetag)" -o " param count:" \
 -v "count(*[starts-with(name(.),'param_')])" \
@@ -115,12 +115,12 @@ check_typetag_param_type()
 #typetag position = param type
 diff \
 <( \
-xmlstarlet sel -t -m "//*[starts-with(name(.),'message_')]" \
+xmlstarlet sel -t -m "//*[starts-with(name(.),'message_') and not(contains(@typetag,'*'))]" \
 -v "name(.)" -o " " -v @pattern -o " " \
 -v @typetag -n "$1" \
 ) \
 <( \
-xmlstarlet sel -t -m "//*[starts-with(name(.),'message_')]" \
+xmlstarlet sel -t -m "//*[starts-with(name(.),'message_') and not(contains(@typetag,'*'))]" \
 -v "name(.)" -o " " -v @pattern -o " " \
 -m "*[starts-with(name(.),'param_')]" \
 -v "substring-after(name(.),'_')" -b -n "$1" \
