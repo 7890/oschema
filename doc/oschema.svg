@@ -3831,7 +3831,7 @@ onmouseover='makeVisible("_1_1_1_3_4")' onmouseout='makeHidden("_1_1_1_3_4")'/>
 <rect class='shadow' x='3' y='3' width='123' height='46' rx='9'/>
 <rect class='boxattribute2' x='0' y='0' width='123' height='46' rx='9'
 onmouseover='makeVisible("_1_1_1_3_5")' onmouseout='makeHidden("_1_1_1_3_5")'/>
-<text class='strong' x='5' y='27'><tspan class='big'>@</tspan> url</text>
+<text class='strong' x='5' y='27'><tspan class='big'>@</tspan> doc_origin</text>
 <text class='visible' x='5' y='41'>type: type_osc_url</text>
 <text class='hidden' visibility='hidden' x='5' y='41'>use: optional</text>
 <line class='connection' id='p_1_1_1_3_5' x1='-35' y1='-9420' x2='-35' y2='-40'/>
@@ -7312,7 +7312,7 @@ onmouseover='makeVisible("_1_1_1_4_4")' onmouseout='makeHidden("_1_1_1_4_4")'/>
 <rect class='shadow' x='3' y='3' width='123' height='46' rx='9'/>
 <rect class='boxattribute2' x='0' y='0' width='123' height='46' rx='9'
 onmouseover='makeVisible("_1_1_1_4_5")' onmouseout='makeHidden("_1_1_1_4_5")'/>
-<text class='strong' x='5' y='27'><tspan class='big'>@</tspan> url</text>
+<text class='strong' x='5' y='27'><tspan class='big'>@</tspan> doc_origin</text>
 <text class='visible' x='5' y='41'>type: type_osc_url</text>
 <text class='hidden' visibility='hidden' x='5' y='41'>use: optional</text>
 <line class='connection' id='p_1_1_1_4_5' x1='-35' y1='-10059' x2='-35' y2='-40'/>

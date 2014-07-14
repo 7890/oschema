@@ -19,9 +19,9 @@ Allow * in typetags (type_osc_typetag)
 Both uses of '*' create ambiguity that is left to 
 describe in the 'desc' and 'custom' elements
 
-New attributes for message_[in|out]: uri, url
+New attributes for message_[in|out]: uri, doc_origin
 uri: pointing to an existing oschema defined "namespace"
-url: pointing to the oschema instance document containing 
+doc_origin: pointing to the oschema instance document containing 
 the definition
 
 This allows to use already defined OSC message designs 
@@ -235,7 +235,7 @@ css, js etc.
 
 <!-- re-use existing definition.  -->
     <xs:attribute name="uri" type="type_osc_unit_path" use="optional"/>
-    <xs:attribute name="url" type="type_osc_url" use="optional"/>
+    <xs:attribute name="doc_origin" type="type_osc_url" use="optional"/>
 
   </xs:complexType>
 <!-- ============================================= -->
@@ -264,7 +264,7 @@ css, js etc.
 
 <!-- re-use existing definition.  -->
     <xs:attribute name="uri" type="type_osc_unit_path" use="optional"/>
-    <xs:attribute name="url" type="type_osc_url" use="optional"/>
+    <xs:attribute name="doc_origin" type="type_osc_url" use="optional"/>
 
   </xs:complexType>
 <!-- ============================================= -->
@@ -302,8 +302,8 @@ example use:
 pattern: /prefix/*
 typetag: *
 uri: ...
-url: ...
-this means all below /prefix is defined by namespace uri, accessible at url
+doc_origin: ...
+this means all below /prefix is defined by namespace uri, accessible at doc_origin
 
 </pre>]]></xs:documentation>
     </xs:annotation>
@@ -341,8 +341,8 @@ Valid pattern examples:
 pattern: /prefix/*
 typetag: *
 uri: ...
-url: ...
-this means all below /prefix is defined by namespace uri, accessible at url
+doc_origin: ...
+this means all below /prefix is defined by namespace uri, accessible at doc_origin
 
 </pre>]]></xs:documentation>
     </xs:annotation>

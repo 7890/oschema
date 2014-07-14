@@ -11,23 +11,23 @@
 		pattern="/sub/*" 
 		typetag="*" 
 		uri="http://kind.of/namespace/for_semantics/y/" 
-		url="http://fetch.it/here.xml"/>
+		doc_origin="http://fetch.it/here.xml"/>
 
 	<message_out 
 		pattern="/sub/*" 
 		typetag="*" 
 		uri="http://kind.of/namespace/for_semantics/y/" 
-		url="http://fetch.it/here.xml"/>
+		doc_origin="http://fetch.it/here.xml"/>
 
 </osc_unit>
 
 <!--
 
-<message_in pattern="/*" typetag="*" uri="" url="">
+<message_in pattern="/*" typetag="*" uri="" doc_origin="">
 
 </message_in>
 
-<message_out pattern="/*" typetag="*" uri="" url="">
+<message_out pattern="/*" typetag="*" uri="" doc_origin="">
 
 </message_out>
 
