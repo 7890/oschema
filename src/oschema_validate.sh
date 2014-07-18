@@ -91,7 +91,7 @@ expect_ret()
 
 validate()
 {
-	xmlstarlet val -e -s "$1" "$2"
+	xmlstarlet val -e -s "$1" "$2" 1>&2
 }
 
 check_typetag_param_count()
