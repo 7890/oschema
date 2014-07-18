@@ -10,6 +10,22 @@ elementFormDefault="qualified">
 =============================================
 Revision history
 
+-20140718       v1.2    tom@trellis.ch
+Remove message_[in|out]: uri, doc_origin
+(v1.1 instances will be INVALID but there are none)
+
+Add element aspect to message_[in|out]
+
+aspect: uri(optional), doc_origin, xpath
+Points to another oschema instance document accessible 
+at doc_origin. xpath denotes which parts (messages) will 
+be "cherry picked". The pattern attribute of the message 
+having an aspect element denotes the "mount point" of 
+the referenced aspect.
+
+Allow mixed order of message_[in|out]
+github issue#2, Thanks to Mark McCurry for the hint
+
 -20140714       v1.1    tom@trellis.ch
 Make message_[in|out]@pattern more like a pattern 
 allowing * (type_osc_pattern)
@@ -21,8 +37,8 @@ describe in the 'desc' and 'custom' elements
 
 New attributes for message_[in|out]: uri, doc_origin
 uri: pointing to an existing oschema defined "namespace"
-doc_origin: pointing to the oschema instance document containing 
-the definition
+doc_origin: pointing to the oschema instance document 
+containing the definition
 
 This allows to use already defined OSC message designs 
 (path + typetag) as a subtree of a given path of the 
@@ -206,8 +222,12 @@ css, js etc.
     <xs:sequence>
       <xs:element name="meta" type="type_osc_meta" maxOccurs="1" minOccurs="1"/>
       <xs:element name="doc" type="type_osc_any" maxOccurs="1" minOccurs="0"/>
-      <xs:element name="message_in" type="type_osc_message_in" maxOccurs="unbounded" minOccurs="0"/>
-      <xs:element name="message_out" type="type_osc_message_out" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:choice>
+        <xs:sequence maxOccurs="unbounded" minOccurs="0">
+          <xs:element name="message_in" type="type_osc_message_in" maxOccurs="unbounded" minOccurs="0"/>
+          <xs:element name="message_out" type="type_osc_message_out" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+      </xs:choice>
     </xs:sequence>
     <xs:attribute name="format_version" type="type_osc_format_version" use="required"/>
   </xs:complexType>
@@ -219,6 +239,7 @@ css, js etc.
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:sequence maxOccurs="unbounded" minOccurs="0">
+      <xs:element name="aspect" type="type_osc_message_aspect" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="desc" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="custom" type="type_osc_any" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_i" type="type_osc_param_i" maxOccurs="unbounded" minOccurs="0"/>
@@ -232,12 +253,13 @@ css, js etc.
     </xs:sequence>
     <xs:attribute name="pattern" type="type_osc_pattern" use="required"/>
     <xs:attribute name="typetag" type="type_osc_typetag" use="required"/>
-
-<!-- re-use existing definition.  -->
+<!--
     <xs:attribute name="uri" type="type_osc_unit_path" use="optional"/>
     <xs:attribute name="doc_origin" type="type_osc_url" use="optional"/>
-
+    <xs:attribute name="xpath" type="xs:string" use="optional"/>
+-->
   </xs:complexType>
+
 <!-- ============================================= -->
   <xs:complexType name="type_osc_message_out" mixed="true">
     <xs:annotation>
@@ -246,6 +268,7 @@ css, js etc.
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:sequence maxOccurs="unbounded" minOccurs="0">
+      <xs:element name="aspect" type="type_osc_message_aspect" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="desc" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="custom" type="type_osc_any" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="condition" type="type_osc_condition" maxOccurs="unbounded" minOccurs="0"/>
@@ -261,12 +284,27 @@ css, js etc.
     </xs:sequence>
     <xs:attribute name="pattern" type="type_osc_pattern" use="required"/>
     <xs:attribute name="typetag" type="type_osc_typetag" use="required"/>
-
-<!-- re-use existing definition.  -->
+<!--
     <xs:attribute name="uri" type="type_osc_unit_path" use="optional"/>
     <xs:attribute name="doc_origin" type="type_osc_url" use="optional"/>
-
+    <xs:attribute name="xpath" type="xs:string" use="optional"/>
+-->
   </xs:complexType>
+
+<!-- ============================================= -->
+  <xs:complexType name="type_osc_message_aspect">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>REUSABLE message(s)
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="uri" type="type_osc_unit_path" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="doc_origin" type="type_osc_url" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="xpath" type="xs:string" maxOccurs="1" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
 <!-- ============================================= -->
   <xs:simpleType name="type_osc_typetag">
     <xs:annotation>
@@ -278,15 +316,15 @@ LO_FLOAT 	32 bit IEEE-754 float.
 LO_STRING 	Standard C, NULL terminated string.
 LO_BLOB 	OSC binary blob type. Accessed using the lo_blob_*() functions.
 LO_INT64 	64 bit signed integer.
-LO_TIMETAG 	OSC TimeTag type, represented by the lo_timetag structure.
+ LO_TIMETAG 	OSC TimeTag type, represented by the lo_timetag structure.
 LO_DOUBLE 	64 bit IEEE-754 double.
-LO_SYMBOL 	Standard C, NULL terminated, string. Used in systems which distinguish strings and symbols.
-LO_CHAR 	Standard C, 8 bit, char variable.
-LO_MIDI 	A 4 byte MIDI packet.
-LO_TRUE 	Sybol representing the value True.
-LO_FALSE 	Sybol representing the value False.
-LO_NIL 		Sybol representing the value Nil.
-LO_INFINITUM 	Sybol representing the value Infinitum. 
+ LO_SYMBOL 	Standard C, NULL terminated, string. Used in systems which distinguish strings and symbols.
+ LO_CHAR 	Standard C, 8 bit, char variable.
+ LO_MIDI 	A 4 byte MIDI packet.
+ LO_TRUE 	Sybol representing the value True.
+ LO_FALSE 	Sybol representing the value False.
+ LO_NIL 	Sybol representing the value Nil.
+ LO_INFINITUM 	Sybol representing the value Infinitum. 
 
 Only a subset of these types is currently supported.
 
@@ -431,6 +469,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
     <xs:restriction base="xs:decimal">
       <xs:enumeration value="1.0"/>
       <xs:enumeration value="1.1"/>
+      <xs:enumeration value="1.2"/>
     </xs:restriction>
   </xs:simpleType>
 <!-- ============================================= -->
