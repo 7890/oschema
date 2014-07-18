@@ -1,34 +1,39 @@
 <?xml version="1.0"?>
 <!-- referencing existing oschema instances -->
-<osc_unit format_version="1.1">
+<osc_unit format_version="1.2">
 	<meta>
 		<name>a_prog</name>
 		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
 		<doc_origin>http://where.to/?find=this&amp;xml_file</doc_origin>
 	</meta>
 
-	<message_in 
-		pattern="/sub/*" 
-		typetag="*" 
-		uri="http://kind.of/namespace/for_semantics/y/" 
-		doc_origin="http://fetch.it/here.xml"/>
+	<message_in pattern="/sub/*" typetag="*"> 
+		<aspect>
+			<uri>http://kind.of/namespace/for_semantics/y/</uri>
+			<doc_origin>http://fetch.it/here.xml</doc_origin>
+			<xpath>//message_in</xpath>
+		</aspect>
+	</message_in>
 
-	<message_out 
-		pattern="/sub/*" 
-		typetag="*" 
-		uri="http://kind.of/namespace/for_semantics/y/" 
-		doc_origin="http://fetch.it/here.xml"/>
+	<message_out pattern="/sub/*" typetag="*"> 
+<!--
+		<uri>http://kind.of/namespace/for_semantics/y/</uri>
+-->
+		<aspect>
+			<doc_origin>http://fetch.it/here.xml</doc_origin>
+			<xpath>//message_out</xpath>
+		</aspect>
+	</message_out>
+
 
 </osc_unit>
 
 <!--
 
-<message_in pattern="/*" typetag="*" uri="" doc_origin="">
-
-</message_in>
-
-<message_out pattern="/*" typetag="*" uri="" doc_origin="">
-
-</message_out>
+<aspect>
+	<uri></uri>
+	<doc_origin></doc_origin>
+	<xpath>/xpath>
+</aspect>
 
 -->
