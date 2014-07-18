@@ -15,7 +15,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [ $# -lt 1 ]
 then
-	echo "need param: <xml file> (<xsd file>)"
+	echo "need param: <xml file> (<xsd file>)" >&2
 	exit
 fi
 
@@ -29,21 +29,21 @@ fi
 
 if [ ! -e "$XSD" ]
 then
-	echo "schema file $XSD not found!"
+	echo "schema file $XSD not found!" >&2
 	exit 1
 fi
 
 if [ ! -e "$XML" ]
 then
-	echo "instance file $XML not found!"
+	echo "instance file $XML not found!" >&2
 	exit 1
 fi
 
 print_label()
 {
-	echo ".------"
-	echo "| $1"
-	echo "\______"
+	echo ".------" >&2
+	echo "| $1" >&2
+	echo "\______" >&2
 }
 
 checkAvail()
