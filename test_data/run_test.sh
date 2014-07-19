@@ -43,7 +43,7 @@ echo ""
 
 ls -1 "$TEST_DIR"/*.xml | grep -v "inv_" | while read line
 	do
-		a=`"$VAL_SCRIPT" "$line" "$XSD"`
+		a=`"$VAL_SCRIPT" "$line" "$XSD" >/dev/null 2>&1`
 		ret=$?
 
 		if [ $ret -ne 0 ]
