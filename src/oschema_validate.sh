@@ -52,7 +52,7 @@ checkAvail()
 	ret=$?
 	if [ $ret -ne 0 ]
 	then
-		print_label "tool \"$1\" not found. please install"
+		print_label "/!\\ tool \"$1\" not found. please install"
 		exit 1
 	fi
 }
@@ -84,7 +84,7 @@ expect_ret()
 {
 	if [ x"$1" != x"$2" ]
 	then
-		print_label " /!\ found at least one invalid aspect, aborting."
+		print_label "/!\\ found at least one invalid aspect, aborting."
 		exit 1
 	fi
 }
@@ -311,3 +311,5 @@ check_range_values_max_exclusive "$XML"
 expect_ret $? 1
 
 print_label "done validate.sh - file is a valid oschema instance :)"
+
+exit
