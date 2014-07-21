@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- minimal valid oscdoc instance -->
-<!-- param_i, ranges -->
+<!-- param_c, ranges -->
 <osc_unit format_version="1.0">
 	<meta>
 		<name>a_prog</name>
