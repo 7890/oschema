@@ -9,6 +9,9 @@ elementFormDefault="qualified">
 <pre>
 =============================================
 Revision history
+-20140721       v1.2.1  tom@trellis.ch
+add param_c: ascii char, decimal int value 0-127
+supporting range_min_max (hints|grid)
 
 -20140718       v1.2    tom@trellis.ch
 Remove message_[in|out]: uri, doc_origin
@@ -248,6 +251,7 @@ css, js etc.
       <xs:element name="param_d" type="type_osc_param_d" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_s" type="type_osc_param_s" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_b" type="type_osc_param_b" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="param_c" type="type_osc_param_c" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_X" type="type_osc_param" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param__" type="type_osc_param_" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
@@ -279,6 +283,7 @@ css, js etc.
       <xs:element name="param_d" type="type_osc_param_d" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_s" type="type_osc_param_s" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_b" type="type_osc_param_b" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="param_c" type="type_osc_param_c" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_X" type="type_osc_param" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param__" type="type_osc_param_" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
@@ -346,7 +351,7 @@ this means all below /prefix is defined by namespace uri, accessible at doc_orig
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="([ihfdsbX]*)|([ihfdsbX]{1,}[_]?)|([*])"/>
+      <xs:pattern value="([ihfdsbcX]*)|([ihfdsbcX]{1,}[_]?)|([*])"/>
     </xs:restriction>
   </xs:simpleType>
 <!-- ============================================= -->
@@ -357,7 +362,7 @@ this means all below /prefix is defined by namespace uri, accessible at doc_orig
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="[ihfdsbX]{1}"/>
+      <xs:pattern value="[ihfdsbcX]{1}"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -510,6 +515,18 @@ Implicitely "[]" min/max inclusive min <= x <= max
     <xs:restriction base="xs:string">
       <xs:enumeration value="UDP"/>
       <xs:enumeration value="TCP"/>
+    </xs:restriction>
+  </xs:simpleType>
+<!-- ============================================= -->
+  <xs:simpleType name="type_osc_type_c">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>unsigned 8-bit char, decimal 0-255
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="255"/>
     </xs:restriction>
   </xs:simpleType>
 <!-- ============================================= -->
@@ -688,6 +705,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
       <xs:element name="token" type="type_osc_string_token" maxOccurs="unbounded" minOccurs="1"/>
     </xs:sequence>
   </xs:complexType>
+
 <!-- ============================================= -->
   <xs:complexType name="type_osc_param_s">
     <xs:annotation>
@@ -720,6 +738,65 @@ Implicitely "[]" min/max inclusive min <= x <= max
         <xs:attribute name="max_size" type="xs:nonNegativeInteger" use="optional"/>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+ <!-- ============================================= -->
+  <xs:complexType name="type_osc_range_c_min_max">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>Supertype for char (dec/int!) value ranges
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="type_osc_range">
+        <xs:choice>
+          <xs:element name="hints" type="type_osc_hints_c" maxOccurs="1" minOccurs="0"/>
+          <xs:element name="grid" type="type_osc_grid_c" maxOccurs="1" minOccurs="0"/>
+        </xs:choice>
+        <xs:attribute name="min" type="type_osc_type_c" use="required"/>
+        <xs:attribute name="max" type="type_osc_type_c" use="required"/>
+        <xs:attribute name="default" type="type_osc_type_c" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<!-- ============================================= -->
+  <xs:complexType name="type_osc_param_c">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>LO_CHAR 	Standard C, 8 bit, char variable
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="type_osc_param">
+<!-- ====================== -->
+        <xs:sequence maxOccurs="1" minOccurs="0">
+           <xs:element name="range_min_max" type="type_osc_range_c_min_max"/>
+        </xs:sequence>
+        <xs:attribute name="default" type="type_osc_type_c" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<!-- ============================================= -->
+  <xs:complexType name="type_osc_hints_c">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="point" type="type_osc_point_c" maxOccurs="unbounded" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+<!-- ============================================= -->
+  <xs:complexType name="type_osc_grid_c">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>
+</pre>]]></xs:documentation>
+    </xs:annotation>
+
+    <xs:sequence>
+      <xs:element name="point" type="type_osc_point_c" maxOccurs="unbounded" minOccurs="1"/>
+    </xs:sequence>
   </xs:complexType>
 <!-- ============================================= -->
   <xs:complexType name="type_osc_hints_i">
@@ -1305,6 +1382,20 @@ Implicitely "[]" min/max inclusive min <= x <= max
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
+<!-- ============================================= -->
+  <xs:complexType name="type_osc_point_c">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>8-bit char (dec) point value
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="type_osc_point">
+        <xs:attribute name="value" type="type_osc_type_c" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
 <!-- ============================================= -->
   <xs:complexType name="type_osc_point_i">
     <xs:annotation>
