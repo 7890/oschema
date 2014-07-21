@@ -187,7 +187,7 @@ return $?
 
 check_range_values_min_inclusive()
 {
-#MIN [: i,h,f,d
+#MIN [: i,h,f,d,c
 xmlstarlet sel -t -m "//*[starts-with(name(.),'range_') and \
 name(.)!='range_inf_inf' and @min and ((@lmin and @lmin[.='[']) or not(@lmin))]" \
 \
@@ -221,7 +221,7 @@ return $?
 
 check_range_values_max_inclusive()
 {
-#MAX ]: i,h,f,d
+#MAX ]: i,h,f,d,c
 xmlstarlet sel -t -m "//*[starts-with(name(.),'range_') and \
 name(.)!='range_inf_inf' and @max and ((@lmax and @lmax[.=']']) or not(@lmax))]" \
 \
