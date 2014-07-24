@@ -1,6 +1,8 @@
 PREFIX ?= /usr/local
 INSTALLDIR ?= $(PREFIX)/bin
 
+XSDDIR = $(INSTALLDIR)/oschema_xsd
+
 SRC = src
 DOC = doc
 DIST = dist
@@ -90,7 +92,10 @@ install:
 	@echo ""
 
 	cp $(SRC)/oschema_validate.sh $(INSTALLDIR)/oschema_validate
-	cp $(SRC)/oschema.xsd $(INSTALLDIR)/
+
+	mkdir -p $(XSDDIR)
+
+	cp $(SRC)/oschema.xsd $(XSDDIR)/
 
 	@echo ""
 	@echo "use: oschema_validate my_oschema_instance.xml"
@@ -112,7 +117,11 @@ uninstall:
 	@echo ""
 
 	rm -f $(INSTALLDIR)/oschema_validate
+
+#legacy uninstall
 	rm -f $(INSTALLDIR)/oschema.xsd
+#--
+	rm -rf $(XSDDIR)
 
 	@echo ""
 	@echo "done."

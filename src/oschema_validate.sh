@@ -20,7 +20,7 @@ then
 fi
 
 XML="$1"
-XSD="$DIR/oschema.xsd"
+XSD="$DIR/oschema_xsd/oschema.xsd"
 
 if [ $# -gt 1 ]
 then
