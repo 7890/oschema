@@ -43,7 +43,7 @@ text<br/>
 
 	</doc>
 
-	<message_in pattern="/first/message" typetag="iihfdsXf">
+	<message_in pattern="/first/message" typetag="iihfdscTFNIXf">
 		<desc>desc 1 msg1</desc>
 		<desc>desc 2 msg1</desc>
 
@@ -105,12 +105,21 @@ text<br/>
 			</range_min_max>
 		</param_d>
 
-		<param_s symbol="s6_param_s" min_length="10" max_length="20" regex="aaa" default="sssss">
+		<param_s symbol="s6_param_s" min_length="10" max_length="20" default="sssss">
 			<whitelist>
 				<token>Token1</token>
 				<token>Token2</token>
 			</whitelist>
 		</param_s>
+
+		<param_c symbol="sc">
+			<range_min_max min="0" max="127"/>
+		</param_c>
+
+		<param_T symbol="sT"/>
+		<param_F symbol="sF"/>
+		<param_N symbol="sN"/>
+		<param_I symbol="sI"/>
 
 		<param_X symbol="bbbimbol">
 			<custom><content/>here
@@ -138,7 +147,7 @@ text<br/>
 
 	<message_in pattern="/test/string" typetag="s">
 		<desc>test desc</desc>
-		<param_s symbol="gugus" min_length="4" max_length="8" regex="2asjsdfjl" default="default">
+		<param_s symbol="gugus" min_length="4" max_length="8" default="default">
 			<desc>desc here</desc>
 			<whitelist>
 				<token>aaa</token>
@@ -164,9 +173,21 @@ text<br/>
 	</message_in>
 
 
-	<message_out pattern="/a/path" typetag="i">
+	<message_out pattern="/a/path" typetag="icTFNI">
 
 		<param_i symbol="gugus"/>
+
+		<param_c symbol="sc">
+			<range_min_max min="0" max="127"/>
+		</param_c>
+
+		<param_T symbol="sT"/>
+		<param_F symbol="sF"/>
+		<param_N symbol="sN"/>
+		<param_I symbol="sI"/>
+
+
+
 	</message_out>
 
 	<message_out pattern="/a/path" typetag=""/>
