@@ -10,6 +10,36 @@ elementFormDefault="qualified">
 =============================================
 Revision history
 
+-20140727       v1.3    tom@trellis.ch
+
+add message_[in|out]@abstract (0,1), optional
+
+message path pattern containing * or [n(,(m))] ranges must be marked as
+abstract
+
+Add [x,y] ranges to message_[in|out]@pattern
+0 <= x <= y
+
+To express hierarchical structures with repeating components and 
+sub-trees, "enumerated paths". Methods with [] ranges are abstract and 
+can't be sent in the shown form to the unit. The sender must construct/expand 
+the rule and the unit has its own way to delegate and map to an internal 
+control/query endpoint. 
+
+/a[0,5]/b[0,7]/x ii
+/a[5]/b[3]/special ff
+
+#unbounded/unknown/runtime/dynamic decision, starting at 1
+/x/y[1,]/z ss
+
+ranges can appear "alone" or as last in path. valid:
+/[3,4]/a[2]
+
+@regex in param_s REMOVED
+-> will be in own element
+
+(need more + better annotation/documentations)
+
 -20140721       v1.2.2  tom@trellis.ch
 add param_T: true
 add param_F: false
@@ -272,11 +302,7 @@ css, js etc.
     </xs:sequence>
     <xs:attribute name="pattern" type="type_osc_pattern" use="required"/>
     <xs:attribute name="typetag" type="type_osc_typetag" use="required"/>
-<!--
-    <xs:attribute name="uri" type="type_osc_unit_path" use="optional"/>
-    <xs:attribute name="doc_origin" type="type_osc_url" use="optional"/>
-    <xs:attribute name="xpath" type="xs:string" use="optional"/>
--->
+    <xs:attribute name="abstract" type="type_osc_boolean" use="optional"/>
   </xs:complexType>
 
 <!-- ============================================= -->
@@ -308,11 +334,7 @@ css, js etc.
     </xs:sequence>
     <xs:attribute name="pattern" type="type_osc_pattern" use="required"/>
     <xs:attribute name="typetag" type="type_osc_typetag" use="required"/>
-<!--
-    <xs:attribute name="uri" type="type_osc_unit_path" use="optional"/>
-    <xs:attribute name="doc_origin" type="type_osc_url" use="optional"/>
-    <xs:attribute name="xpath" type="xs:string" use="optional"/>
--->
+    <xs:attribute name="abstract" type="type_osc_boolean" use="optional"/>
   </xs:complexType>
 
 <!-- ============================================= -->
@@ -399,17 +421,124 @@ Valid pattern examples:
 /standard/case
 /a_b/c-d/123.4
 #foo
+/CASE/sensitive
+/+/-/_/8./3 
 
+
+http://opensoundcontrol.org/spec-1_0
+Each OSC Method and each OSC Container other than the root of the tree has a symbolic name, 
+an ASCII string consiting of printable characters other than the following:
+
+character 	name 	ASCII code (decimal)
+' ' 	space 	32
+# 	number sign 	35
+* 	asterisk 	42
+, 	comma 	44
+/ 	forward slash 	47
+? 	question mark 	63
+[ 	open bracket 	91
+] 	close bracket 	93
+{ 	open curly brace 	123
+} 	close curly brace 	125
+
+---
+
+This means any of these characters appearing in a path make the path not an allowed OSC path by 
+the specification.
+
+These characters could be used to express abstract paths in a documentation context.
+
+The idea is to allow defining repetitive path patterns to handle large trees with less method 
+signatures at the cost of clients needing to interprete the pattern (as well as the described 
+unit of course).
+
+MESSAGE PATH PATTERNS THAT CONTAIN NON - ALLOWED CHARACTERS SHOULD/WILL BE MARKED AS
+"ABSTRACT"
+
+
+---
 pattern: /prefix/*
 typetag: *
 uri: ...
 doc_origin: ...
 this means all below /prefix is defined by namespace uri, accessible at doc_origin
 
+*: anything
+
+(((
+#: any number
+
+?: any single char
+
+, ?
+)))
+
+---
+http://en.wikipedia.org/wiki/Interval_%28mathematics%29
+Notations for intervals
+
+The interval of numbers between a and b, including a and b, is often denoted [a, b]. The 
+two numbers are called the endpoints of the interval.
+---
+
+negative values in the interval set are not allowed
+
+interval test: 
+[x,y]: interval x... y, x<=y, x and y included, non-negative integers
+
+[x]: x==y: x 
+
+[x,]: interval starting at x, x included, non-negative integers
+
+valid examples
+[0,9],[3,6],[3,3],[3],[3,]
+
+invalid examples
+[-1,4],[3,2],[,3],[,]
+
+(needs math checking)
+
+
+((((
+
+[33,$(rule,end)]: set starting at a, all values following $increment rule up to end
+[3,$((+=2,*=4),155)]
+
+set test:
+
+{1,2}: 1 and 2 are in the set
+{2,1}: 2 and 1 are in the set (order (can) matter)
+{2,2,1}: 2 two times in set
+
+))))
+
+
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="/|#|((/|#)[*a-zA-Z0-9./_-]*[^/])"/>
+      <xs:pattern value="/|#|([\*\+a-zA-Z0-9\./_-]|([\[][0-9]+([,]([0-9]+)?)?[\]]))+"/>
+<!--
+/|#
+|
+(
+	[\*a-zA-Z0-9\./_-]
+	|
+	(
+		[\[]
+		[0-9]+
+		(
+			[,]
+			(
+				[0-9]+
+			)?
+		)?
+		[\]]
+	)
+)+
+
+[^/.]
+-->
+
     </xs:restriction>
   </xs:simpleType>
 <!-- ============================================= -->
@@ -496,6 +625,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
       <xs:enumeration value="1.2"/>
       <xs:enumeration value="1.2.1"/>
       <xs:enumeration value="1.2.2"/>
+      <xs:enumeration value="1.3"/>
     </xs:restriction>
   </xs:simpleType>
 <!-- ============================================= -->
@@ -740,7 +870,9 @@ Implicitely "[]" min/max inclusive min <= x <= max
         </xs:sequence>
         <xs:attribute name="min_length" type="xs:nonNegativeInteger" use="optional"/>
         <xs:attribute name="max_length" type="xs:nonNegativeInteger" use="optional"/>
-        <xs:attribute name="regex" type="xs:string" use="optional"/>
+<!--        <xs:attribute name="regex" type="xs:string" use="optional"/>
+will be an element
+-->
         <xs:attribute name="default" type="xs:string" use="optional"/>
       </xs:extension>
     </xs:complexContent>
