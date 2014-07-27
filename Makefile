@@ -1,7 +1,7 @@
 PREFIX ?= /usr/local
-INSTALLDIR ?= $(PREFIX)/bin
-
-XSDDIR = $(INSTALLDIR)/oschema_xsd
+bindir = $(PREFIX)/bin
+docdir = $(PREFIX)/share/doc
+XSDDIR = $(bindir)/oschema_xsd
 
 SRC = src
 DOC = doc
@@ -11,12 +11,14 @@ LIB = lib
 STYLE = css
 TEST = test_data
 
+OSCHEMA_VERSION ?= 1.3
+
 #needs tool check
 #http://stackoverflow.com/questions/5618615/check-if-a-program-exists-from-a-makefile
 
 default: doc
 
-all: clean doc test dist
+all: doc
 
 doc: $(SRC)/oschema.xsd
 
@@ -26,6 +28,13 @@ doc: $(SRC)/oschema.xsd
 	@echo ""
 	@echo "tools needed: java, xmlstarlet"
 	@echo ""
+	@echo "the github repository contains a generated"
+	@echo "documentaion that corresponds the the oschema.xsd file."
+	@echo ""
+	@echo "this step is not necessary to use the install target."
+	@echo ""
+
+	java -version
 
 	cd $(DOC) \
 	&& echo ""; echo "creating svg..." \
@@ -42,31 +51,30 @@ doc: $(SRC)/oschema.xsd
 	@echo "done."
 	@echo ""
 
-dist: $(DOC)/oschema.svg $(DOC)/oschema.html
-
+dist: 
 	@echo ""
 	@echo "creating tarball for distribution"
 	@echo "---------------------------------"
 	@echo ""
 
-	mkdir -p $(DIST)/oschema-1.0
-	cp $(SRC)/oschema.xsd $(DIST)/oschema-1.0
-	cp $(SRC)/oschema_validate.sh $(DIST)/oschema-1.0
-	cp $(DOC)/oschema.svg $(DIST)/oschema-1.0
-	cp $(DOC)/oschema.html $(DIST)/oschema-1.0
-	cp $(TEST)/minimal.xml $(DIST)/oschema-1.0
+	mkdir -p $(DIST)/oschema-$(OSCHEMA_VERSION)
+	cp $(SRC)/oschema.xsd $(DIST)/oschema-$(OSCHEMA_VERSION)
+	cp $(SRC)/oschema_validate.sh $(DIST)/oschema-$(OSCHEMA_VERSION)
+	cp $(DOC)/oschema.svg $(DIST)/oschema-$(OSCHEMA_VERSION)
+	cp $(DOC)/oschema.html $(DIST)/oschema-$(OSCHEMA_VERSION)
+	cp $(TEST)/minimal.xml $(DIST)/oschema-$(OSCHEMA_VERSION)
 
 	cd $(DIST) && \
-	tar cfvz oschema-1.0.tgz oschema-1.0 && \
+	tar cfvz oschema-$(OSCHEMA_VERSION).tgz oschema-$(OSCHEMA_VERSION) && \
 	cd ..
 
 	@echo ""
-	@echo "output: $(DIST)/oschema-1.0.tgz"
+	@echo "output: $(DIST)/oschema-$(OSCHEMA_VERSION).tgz"
 	@echo ""
 	@echo "done."
 
-test: $(SRC)/oschema.xsd
-
+test: 
+#$(SRC)/oschema.xsd
 	@echo ""
 	@echo "testing several invalid and valid instances against scheama"
 	@echo "-----------------------------------------------------------"
@@ -84,18 +92,25 @@ install:
 	@echo "installing oschema_validate"
 	@echo "---------------------------"
 	@echo ""
-	@echo "INSTALLDIR: $(INSTALLDIR)"
+	@echo "DESTDIR: $(DESTDIR)"
+	@echo "bindir: $(bindir)"
 	@echo ""
-	@echo "'make install' needs to be run with root privileges, i.e."
+	@echo "docdir: $(docdir)"
+	@echo "'make install' probably needs to be run with root privileges, i.e."
 	@echo ""
 	@echo "sudo make install"
 	@echo ""
 
-	cp $(SRC)/oschema_validate.sh $(INSTALLDIR)/oschema_validate
+	install -d $(DESTDIR)$(bindir)
+	install -m755 $(SRC)/oschema_validate.sh $(DESTDIR)$(bindir)/oschema_validate
 
-	mkdir -p $(XSDDIR)
+	install -d $(DESTDIR)$(XSDDIR)
+	install -m644 $(SRC)/oschema.xsd $(DESTDIR)$(XSDDIR)/
 
-	cp $(SRC)/oschema.xsd $(XSDDIR)/
+	install -d $(DESTDIR)$(docdir)
+
+	install -m644 $(DOC)/oschema.svg $(DESTDIR)$(docdir)
+	install -m644 $(DOC)/oschema.html $(DESTDIR)$(docdir)
 
 	@echo ""
 	@echo "use: oschema_validate my_oschema_instance.xml"
@@ -109,37 +124,41 @@ uninstall:
 	@echo "uninstalling oschema_validate"
 	@echo "-----------------------------"
 	@echo ""
-	@echo "INSTALLDIR: $(INSTALLDIR)"
+	@echo "DESTDIR: $(DESTDIR)"
+	@echo "bindir: $(bindir)"
 	@echo ""
 	@echo "'make uninstall' needs to be run with root privileges, i.e."
 	@echo ""
 	@echo "sudo make uninstall"
 	@echo ""
 
-	rm -f $(INSTALLDIR)/oschema_validate
+	rm -f $(DESTDIR)$(bindir)/oschema_validate
 
 #legacy uninstall
-	rm -f $(INSTALLDIR)/oschema.xsd
+	rm -f $(DESTDIR)$(bindir)/oschema.xsd
 #--
-	rm -rf $(XSDDIR)
+	rm -rf $(DESTDIR)$(XSDDIR)
+	-rmdir $(DESTDIR)$(bindir)
+
+	rm -f $(DESTDIR)$(docdir)/oschema.svg
+	rm -f $(DESTDIR)$(docdir)/oschema.html
+
+	-rmdir $(DESTDIR)$(docdir)
 
 	@echo ""
 	@echo "done."
 	@echo ""
 
 clean:
-
 	@echo ""
 	@echo "cleaning up $(DIST) directory"
 	@echo "-----------------------------"
 	@echo ""
 
-	mkdir -p $(DIST)
-	rm -rf ./$(DIST)/oschema-1.0
-	rm -f ./$(DIST)/*
+	rm -rf $(DIST)
 
 	@echo ""
 	@echo "done."
 	@echo ""
 
-.PHONY: all
+.PHONY: all doc clean install uninstall dist test
