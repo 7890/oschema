@@ -3,3 +3,6 @@ Wed Jun 25 15:40:03 CEST 2014
 
 http://stackoverflow.com/questions/1339352/how-do-i-set-dfile-encoding-within-ants-build-xml
 ANT_OPTS=-Dfile.encoding=iso-8859-1 ant
+
+the zip extracts to the current directory.
+repacked into a tgz, using a directory xsdvi (containing the orig. zip)
