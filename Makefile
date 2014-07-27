@@ -1,6 +1,6 @@
 PREFIX ?= /usr/local
 bindir = $(PREFIX)/bin
-docdir = $(PREFIX)/share/doc
+docdir = $(PREFIX)/share/doc/oschema
 XSDDIR = $(bindir)/oschema_xsd
 
 SRC = src
