@@ -11,11 +11,20 @@
 #need match grid points -> min, max and default must be grid points
 #except f,d exclusive start ]   exclusive end [
 
+#pattern: not ending with /
+#pattern: containing * or [] -> message abstract
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [ $# -lt 1 ]
 then
-	echo "need param: <xml file> (<xsd file>)" >&2
+	echo "need param: <XML file> (<XSD file>)" >&2
+	exit
+fi
+
+if [ x"$1" = "x--help" ]
+then
+	echo "need param: <XML file> (<XSD file>)" >&2
 	exit
 fi
 
@@ -309,6 +318,10 @@ expect_ret $? 1
 print_label "range [ default, points < max"
 check_range_values_max_exclusive "$XML"
 expect_ret $? 1
+
+#check pattern ranges
+#if * or [] -> @abstract==1?
+#0 <= start <= end
 
 print_label "done validate.sh - file is a valid oschema instance :)"
 
