@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- minimal valid oscdoc instance -->
 <!-- param_s, attributes, whitelist -->
-<osc_unit format_version="1.0">
+<osc_unit format_version="1.2">
 	<meta>
 		<name>a_prog</name>
 		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
@@ -31,7 +31,7 @@
 		</param_s>
 	</message_in>
 	<message_in pattern="/d/path/in" typetag="s">
-		<param_s symbol="s_i1" regex="^test">
+		<param_s symbol="s_i1">
 			<whitelist>
 				<token>atoken</token>
 				<token>btoken</token>
@@ -39,7 +39,7 @@
 		</param_s>
 	</message_in>
 	<message_in pattern="/e/path/in" typetag="s">
-		<param_s symbol="s_i1" min_length="5" max_length="20" regex="^test" units="special units" >
+		<param_s symbol="s_i1" min_length="5" max_length="20" units="special units" >
 			<whitelist>
 				<token>atoken</token>
 				<token>btoken</token>
@@ -73,7 +73,7 @@
 		</param_s>
 	</message_out>
 	<message_out pattern="/d/path/out" typetag="s">
-		<param_s symbol="s_i1" regex="^test">
+		<param_s symbol="s_i1">
 			<whitelist>
 				<token>atoken</token>
 				<token>btoken</token>
@@ -81,7 +81,7 @@
 		</param_s>
 	</message_out>
 	<message_out pattern="/e/path/out" typetag="s">
-		<param_s symbol="s_i1" min_length="5" max_length="20" regex="^test" units="special units" >
+		<param_s symbol="s_i1" min_length="5" max_length="20" units="special units" >
 			<whitelist>
 				<token>atoken</token>
 				<token>btoken</token>
@@ -91,7 +91,7 @@
 </osc_unit>
 
 <!--
-<param_s symbol="" min_length="" max_length="" regex="" units="" >
+<param_s symbol="" min_length="" max_length="" units="" >
 	<whitelist>
 		<token>atoken</token>
 		<token>btoken</token>

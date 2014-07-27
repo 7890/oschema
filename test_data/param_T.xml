@@ -5,7 +5,7 @@
 	<meta>
 		<name>a_prog</name>
 		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
-		<doc_origin>file://param_c.xml</doc_origin>
+		<doc_origin>file://param_T.xml</doc_origin>
 	</meta>
 	<message_in pattern="/a/path/in" typetag="T">
 		<param_T symbol="c_i1">

@@ -5,9 +5,10 @@
 	<meta>
 		<name>a_prog</name>
 		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
-		<doc_origin>file://param_c.xml</doc_origin>
+		<doc_origin>file://param_I.xml</doc_origin>
 	</meta>
-	<message_in pattern="/a/path/in" typetag="I">
+
+	<message_in pattern="/aaa/bbb" typetag="I">
 		<param_I symbol="c_i1">
 			<desc>optional desc 1</desc>
 			<desc>optional desc 2</desc>
@@ -16,7 +17,7 @@
 		</param_I>
 	</message_in>
 <!-- ranges -->
-	<message_in pattern="/b/path/in" typetag="I">
+	<message_in pattern="/" typetag="I">
 		<param_I symbol="c_i1"/>
 	</message_in>
 
@@ -36,5 +37,9 @@
 </osc_unit>
 
 <!--
-
+ub64@ub64:~/github/oschema/tmp$ cat a.txl | txl2xml | xmlstarlet sel -t -m "//*[@typetag]" -m "ancestor::*[not(name(.)='components')]" -i "@min!=@max" -v "concat('/',name(.),'[',@min,',',@max,']')" -b -i "@min=@max" -v "concat('/',name(.),'[',@min,']')"  -b -b -v "concat('/',name(.),'[',@min,' ',@typetag)" -n
+/u[1]/a[1,10]/b[1,4]/x[ ii
+/u[1]/c[1]/y[ ff
+/u[1]/c[1]/z[ c
+/u[1]/d[1,8]/e[9 sif
 -->
