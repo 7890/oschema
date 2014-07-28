@@ -74,7 +74,7 @@ dist:
 	@echo "done."
 
 test: 
-#$(SRC)/oschema.xsd
+
 	@echo ""
 	@echo "testing several invalid and valid instances against scheama"
 	@echo "-----------------------------------------------------------"
@@ -134,10 +134,10 @@ uninstall:
 
 	rm -f $(DESTDIR)$(bindir)/oschema_validate
 
-#legacy uninstall
-	rm -f $(DESTDIR)$(bindir)/oschema.xsd
-#--
-	rm -rf $(DESTDIR)$(XSDDIR)
+	rm -f $(DESTDIR)$(XSDDIR)/oschema.xsd
+
+	-rmdir $(DESTDIR)$(XSDDIR)
+
 	-rmdir $(DESTDIR)$(bindir)
 
 	rm -f $(DESTDIR)$(docdir)/oschema.svg
