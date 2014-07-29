@@ -6184,6 +6184,8 @@ LO_STRING 	Standard C, NULL terminated string.
 LO_BLOB 	OSC binary blob type. Accessed using the lo_blob_*() functions.
 LO_INT64 	64 bit signed integer.
 LO_TIMETAG 	OSC TimeTag type, represented by the lo_timetag structure.
+                sec: The number of seconds since Jan 1st 1900 in the UTC timezone. 
+                frac: The fractions of a second offset from above, expressed as 1/2^32nds of a second
 LO_DOUBLE 	64 bit IEEE-754 double.
  LO_SYMBOL 	Standard C, NULL terminated, string. Used in systems which distinguish strings and symbols.
 LO_CHAR 	Standard C, 8 bit, char variable.
