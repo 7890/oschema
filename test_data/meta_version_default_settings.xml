@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!-- minimal valid oscdoc instance -->
+<!-- version, default_settings, conf -->
+<osc_unit format_version="1.3.1">
+	<meta>
+		<name>a_prog</name>
+		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
+		<doc_origin>file://param_t.xml</doc_origin>
+		<url title="-Source">http://123123.ss</url>
+		<url title="Project Homepage">http://123123.ss</url>
+		<url>http://123123.ss</url>
+
+		<version type="unit">12312</version>
+		<version type="api">aa.,23423</version>
+
+		<default_settings>
+			<conf type="listen_port" cmd_option="-l">1234</conf>
+			<conf type="send_from_port">3333</conf>
+
+			<conf type="send_to_port" cmd_option="(3rd parameter)">4444</conf>
+			<conf type="send_to_host">asdfd</conf>
+		</default_settings>
+	</meta>
+
+</osc_unit>
+
+<!--
+
+-->

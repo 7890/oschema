@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!-- minimal valid oscdoc instance -->
+<!-- param_t, ranges -->
+<osc_unit format_version="1.0">
+	<meta>
+		<name>a_prog</name>
+		<uri>http://unique.uri/for/that/prog/ending_with_slash/</uri>
+		<doc_origin>file://param_t.xml</doc_origin>
+	</meta>
+	<message_in pattern="/a/path/in" typetag="t">
+		<param_t symbol="c_i1">
+			<desc>optional desc 1</desc>
+			<desc>optional desc 2</desc>
+			<custom>c1</custom>
+			<custom>c2</custom>
+		</param_t>
+	</message_in>
+<!-- ranges -->
+	<message_in pattern="/b/path/in" typetag="t">
+		<param_t symbol="c_i1"/>
+	</message_in>
+
+<!-- almost the same for out messages -->
+	<message_out pattern="/b/path/out" typetag="t">
+		<param_t symbol="c_i1">
+			<desc>optional desc 1</desc>
+			<desc>optional desc 2</desc>
+			<custom>c1</custom>
+			<custom>c2</custom>
+		</param_t>
+	</message_out>
+	<message_out pattern="/c/path/out" typetag="t">
+		<param_t symbol="s_i1"/>
+	</message_out>
+
+</osc_unit>
+
+<!--
+
+-->
