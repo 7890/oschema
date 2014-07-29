@@ -11,6 +11,18 @@ elementFormDefault="qualified">
 Revision history
 
 -20140729       v1.3.1    tom@trellis.ch
+
+add version to meta:
+	express versions of unit to describe, api of unit
+	<version type="api">21.4a</version>
+add default_settings to meta:
+	add conf to default_settings:
+	<conf type="listen_port">1234</conf>
+		express OSC settings, indicate cmd line option
+
+type_osc_named_url: add (optional) @title to (optional) url 
+elements in meta
+
 add param_t (t) timetag
 
 -20140727       v1.3    tom@trellis.ch
@@ -583,6 +595,77 @@ Implicitely "[]" min/max inclusive min <= x <= max
       <xs:enumeration value="]"/>
     </xs:restriction>
   </xs:simpleType>
+
+
+
+<!-- ============================================= -->
+  <xs:simpleType name="type_osc_version_type">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>version types
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="unit"/>
+      <xs:enumeration value="api"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+<!-- ============================================= -->
+  <xs:simpleType name="type_osc_conf_type">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>port types
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="listen_port"/>
+      <xs:enumeration value="send_from_port"/>
+      <xs:enumeration value="send_to_port"/>
+      <xs:enumeration value="send_to_host"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+<!-- ============================================= -->
+  <xs:complexType name="type_osc_conf">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="type" type="type_osc_conf_type" use="required"/>
+        <xs:attribute name="cmd_option" type="xs:string" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+<!-- ============================================= -->
+  <xs:complexType name="type_osc_version">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+    <xs:extension base="xs:string">
+        <xs:attribute name="type" type="type_osc_version_type" use="required"/>
+    </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+<!-- ============================================= -->
+  <xs:complexType name="type_osc_default_settings">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:sequence maxOccurs="unbounded" minOccurs="0">
+      <xs:element name="conf" type="type_osc_conf" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
 <!-- ============================================= -->
   <xs:simpleType name="type_osc_boolean">
     <xs:annotation>
@@ -606,6 +689,19 @@ Implicitely "[]" min/max inclusive min <= x <= max
       <xs:pattern value="[a-z]{1,}://.*"/>
     </xs:restriction>
   </xs:simpleType>
+<!-- ============================================= -->
+  <xs:complexType name="type_osc_named_url">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>URL with title. Use in /meta/url -> indicate source, project home, etc.
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="type_osc_url">
+        <xs:attribute name="title" type="xs:string" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
 <!-- ============================================= -->
   <xs:simpleType name="type_osc_unit_path">
     <xs:annotation>
@@ -713,7 +809,9 @@ Must end with /
       <xs:element name="uri" type="type_osc_unit_path"/>
       <xs:element name="doc_origin" type="type_osc_url"/>
       <xs:element name="author" type="type_osc_author" maxOccurs="unbounded" minOccurs="0"/>
-      <xs:element name="url" type="type_osc_url" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="url" type="type_osc_named_url" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="version" type="type_osc_version" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="default_settings" type="type_osc_default_settings" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="desc" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="custom" type="type_osc_any" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
