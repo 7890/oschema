@@ -11,7 +11,7 @@ LIB = lib
 STYLE = css
 TEST = test_data
 
-OSCHEMA_VERSION ?= 1.3
+OSCHEMA_VERSION ?= 1.3.1
 
 #needs tool check
 #http://stackoverflow.com/questions/5618615/check-if-a-program-exists-from-a-makefile
