@@ -10,6 +10,9 @@ elementFormDefault="qualified">
 =============================================
 Revision history
 
+-20140729       v1.3.1    tom@trellis.ch
+add param_t (t) timetag
+
 -20140727       v1.3    tom@trellis.ch
 
 add message_[in|out]@abstract (0,1), optional
@@ -297,6 +300,7 @@ css, js etc.
       <xs:element name="param_F" type="type_osc_param_F" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_N" type="type_osc_param_N" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_I" type="type_osc_param_I" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="param_t" type="type_osc_param_t" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_X" type="type_osc_param" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param__" type="type_osc_param_" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
@@ -329,6 +333,7 @@ css, js etc.
       <xs:element name="param_F" type="type_osc_param_F" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_N" type="type_osc_param_N" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_I" type="type_osc_param_I" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="param_t" type="type_osc_param_t" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param_X" type="type_osc_param" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="param__" type="type_osc_param_" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
@@ -362,15 +367,15 @@ LO_FLOAT 	32 bit IEEE-754 float.
 LO_STRING 	Standard C, NULL terminated string.
 LO_BLOB 	OSC binary blob type. Accessed using the lo_blob_*() functions.
 LO_INT64 	64 bit signed integer.
- LO_TIMETAG 	OSC TimeTag type, represented by the lo_timetag structure.
+LO_TIMETAG 	OSC TimeTag type, represented by the lo_timetag structure.
 LO_DOUBLE 	64 bit IEEE-754 double.
  LO_SYMBOL 	Standard C, NULL terminated, string. Used in systems which distinguish strings and symbols.
- LO_CHAR 	Standard C, 8 bit, char variable.
+LO_CHAR 	Standard C, 8 bit, char variable.
  LO_MIDI 	A 4 byte MIDI packet.
- LO_TRUE 	Sybol representing the value True.
- LO_FALSE 	Sybol representing the value False.
- LO_NIL 	Sybol representing the value Nil.
- LO_INFINITUM 	Sybol representing the value Infinitum. 
+LO_TRUE 	Symbol representing the value True.
+LO_FALSE 	Symbol representing the value False.
+LO_NIL 	Symbol representing the value Nil.
+LO_INFINITUM 	Symbol representing the value Infinitum. 
 
 Only a subset of these types is currently supported.
 
@@ -392,7 +397,7 @@ this means all below /prefix is defined by namespace uri, accessible at doc_orig
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="([ihfdsbcTFNIX]*)|([ihfdsbcTFNIX]{1,}[_]?)|([*])"/>
+      <xs:pattern value="([ihfdsbcTFNItX]*)|([ihfdsbcTFNItX]{1,}[_]?)|([*])"/>
     </xs:restriction>
   </xs:simpleType>
 <!-- ============================================= -->
@@ -403,7 +408,7 @@ this means all below /prefix is defined by namespace uri, accessible at doc_orig
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="[ihfdsbcTFNIX]{1}"/>
+      <xs:pattern value="[ihfdsbcTFNItX]{1}"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -455,6 +460,7 @@ unit of course).
 MESSAGE PATH PATTERNS THAT CONTAIN NON - ALLOWED CHARACTERS SHOULD/WILL BE MARKED AS
 "ABSTRACT"
 
+message_[in|out]@abstract
 
 ---
 pattern: /prefix/*
@@ -486,7 +492,7 @@ negative values in the interval set are not allowed
 interval test: 
 [x,y]: interval x... y, x<=y, x and y included, non-negative integers
 
-[x]: x==y: x 
+[x]: == [x,x]: x 
 
 [x,]: interval starting at x, x included, non-negative integers
 
@@ -495,9 +501,6 @@ valid examples
 
 invalid examples
 [-1,4],[3,2],[,3],[,]
-
-(needs math checking)
-
 
 ((((
 
@@ -582,7 +585,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:simpleType name="type_osc_boolean">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>0(false) or 1(true)
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:unsignedByte">
@@ -594,7 +597,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:simpleType name="type_osc_url">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>URL, loose check
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:anyURI">
@@ -605,7 +608,8 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:simpleType name="type_osc_unit_path">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>URI in the form of an URL that denotes unique identifier for the osc unit being described.
+Must end with /
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="type_osc_url">
@@ -616,7 +620,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:simpleType name="type_osc_format_version">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>Current and previous version strings
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -626,13 +630,14 @@ Implicitely "[]" min/max inclusive min <= x <= max
       <xs:enumeration value="1.2.1"/>
       <xs:enumeration value="1.2.2"/>
       <xs:enumeration value="1.3"/>
+      <xs:enumeration value="1.3.1"/>
     </xs:restriction>
   </xs:simpleType>
 <!-- ============================================= -->
   <xs:simpleType name="type_osc_condition_type">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>Condition on which a message is sent to target
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -645,7 +650,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:simpleType name="type_osc_target_type">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>Send target address description
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -660,7 +665,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:simpleType name="type_osc_protocol">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>UDP,TCP
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -672,7 +677,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:simpleType name="type_osc_type_c">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>unsigned 8-bit char, decimal 0-255
+<pre>c char
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:int">
@@ -715,7 +720,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:complexType name="type_osc_param">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>Supertype for all param_* elements
+<pre>Supertype for many param_* elements
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:sequence>
@@ -729,7 +734,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:complexType name="type_osc_param_">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>virtual param denoting repetition of last param 0-n times
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:sequence>
@@ -766,7 +771,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:complexType name="type_osc_param_i">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>i integer
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -784,7 +789,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:complexType name="type_osc_param_h">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>h long
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -802,7 +807,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:complexType name="type_osc_param_f">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>f float
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -820,7 +825,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:complexType name="type_osc_param_d">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>d double
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -860,7 +865,7 @@ Implicitely "[]" min/max inclusive min <= x <= max
   <xs:complexType name="type_osc_param_s">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>s string
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -896,7 +901,7 @@ will be an element
   <xs:complexType name="type_osc_param_simple">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>T true
+<pre>Type for simple osc param_*
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:sequence>
@@ -923,7 +928,7 @@ will be an element
   <xs:complexType name="type_osc_param_F">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>F false
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -936,7 +941,7 @@ will be an element
   <xs:complexType name="type_osc_param_N">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>N nil
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -948,7 +953,7 @@ will be an element
   <xs:complexType name="type_osc_param_I">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>I infinity
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -956,6 +961,20 @@ will be an element
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+
+<!-- ============================================= -->
+  <xs:complexType name="type_osc_param_t">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[ 
+<pre>t timetag
+</pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="type_osc_param_simple">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
  <!-- ============================================= -->
   <xs:complexType name="type_osc_range_c_min_max">
     <xs:annotation>
@@ -1210,7 +1229,8 @@ will be an element
   <xs:complexType name="type_osc_range_i_min_inf">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>int value range: MIN to +INFINITY
+<pre>
+int value range: MIN to +INFINITY
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -1551,7 +1571,7 @@ will be an element
   <xs:complexType name="type_osc_any" mixed="true">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>Any valid XML structure
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -1563,7 +1583,7 @@ will be an element
   <xs:complexType name="type_osc_condition">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>Structure to describe conditions when messages_out are sent to targets
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:sequence>
@@ -1576,7 +1596,7 @@ will be an element
   <xs:complexType name="type_osc_target">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>
+<pre>Structure to describe targets where message_out are sent to
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:sequence>
@@ -1603,7 +1623,7 @@ will be an element
   <xs:complexType name="type_osc_point_c">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>8-bit char (dec) point value
+<pre>char point value
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
