@@ -10,8 +10,20 @@ elementFormDefault="qualified">
 =============================================
 Revision history
 
--20140729       v1.3.1    tom@trellis.ch
+-20140819       v1.3.2    tom@trellis.ch
+for float and double value types extend xs:float and xs:double 
+instead of xs:decimal to allow scientific notation
 
+affects osc_type_param_f*, osc_type_param_d*, osc_point_f, osc_point_d
+
+This change is inspired by a pull request "Change xs:decimal To xs:double"
+by fundamental / M. McCurry, 62a38c53c9ec942c88e6dd561146378df85d5567
+
+xsd numeric datatypes overview: http://docstore.mik.ua/orelly/xml/schema/ch04_04.htm
+
+rename type name osc_type_param_decimal to osc_type_param_fd
+
+-20140729       v1.3.1    tom@trellis.ch
 add version to meta:
 	express versions of unit to describe, api of unit
 	<version type="api">21.4a</version>
@@ -26,7 +38,6 @@ elements in meta
 add param_t (t) timetag
 
 -20140727       v1.3    tom@trellis.ch
-
 add message_[in|out]@abstract (0,1), optional
 
 message path pattern containing * or [n(,(m))] ranges must be marked as
@@ -729,6 +740,7 @@ Must end with /
       <xs:enumeration value="1.2.2"/>
       <xs:enumeration value="1.3"/>
       <xs:enumeration value="1.3.1"/>
+      <xs:enumeration value="1.3.2"/>
     </xs:restriction>
   </xs:simpleType>
 <!-- ============================================= -->
@@ -855,10 +867,10 @@ Must end with /
     </xs:complexContent>
   </xs:complexType>
 <!-- ============================================= -->
-  <xs:complexType name="type_osc_param_decimal">
+  <xs:complexType name="type_osc_param_fd">
     <xs:annotation>
       <xs:documentation xml:lang="en"><![CDATA[ 
-<pre>Supertype for float and double param_*
+<pre>Supertype for float and decimal value allowing scientific notation
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -911,7 +923,7 @@ Must end with /
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="type_osc_param_decimal">
+      <xs:extension base="type_osc_param_fd">
         <xs:choice>
           <xs:element name="range_min_max" type="type_osc_range_f_min_max" maxOccurs="1" minOccurs="0"/>
           <xs:element name="range_min_inf" type="type_osc_range_f_min_inf" maxOccurs="1" minOccurs="0"/>
@@ -929,7 +941,7 @@ Must end with /
 </pre>]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="type_osc_param_decimal">
+      <xs:extension base="type_osc_param_fd">
         <xs:choice>
           <xs:element name="range_min_max" type="type_osc_range_d_min_max" maxOccurs="1" minOccurs="0"/>
           <xs:element name="range_min_inf" type="type_osc_range_d_min_inf" maxOccurs="1" minOccurs="0"/>
@@ -1460,7 +1472,7 @@ int value range: MIN to +INFINITY
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="type_osc_range">
-        <xs:attribute name="default" type="xs:decimal" use="optional"/>
+        <xs:attribute name="default" type="xs:float" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -1488,7 +1500,7 @@ int value range: MIN to +INFINITY
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="type_osc_range_f_inf">
-        <xs:attribute name="max" type="xs:decimal" use="required"/>
+        <xs:attribute name="max" type="xs:float" use="required"/>
         <xs:attribute name="lmax" type="xs:string" use="required"/>
       </xs:extension>
     </xs:complexContent>
@@ -1517,7 +1529,7 @@ int value range: MIN to +INFINITY
         <xs:sequence>
           <xs:element name="hints" type="type_osc_hints_f" maxOccurs="1" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute name="min" type="xs:decimal" use="required"/>
+        <xs:attribute name="min" type="xs:float" use="required"/>
         <xs:attribute name="lmin" type="type_osc_range_limits" use="required"/>
       </xs:extension>
     </xs:complexContent>
@@ -1535,9 +1547,9 @@ int value range: MIN to +INFINITY
           <xs:element name="hints" type="type_osc_hints_f" maxOccurs="1" minOccurs="0"/>
           <xs:element name="grid" type="type_osc_grid_f" maxOccurs="1" minOccurs="0"/>
         </xs:choice>
-        <xs:attribute name="min" type="xs:decimal" use="required"/>
+        <xs:attribute name="min" type="xs:float" use="required"/>
         <xs:attribute name="lmin" type="type_osc_range_limits" use="required"/>
-        <xs:attribute name="max" type="xs:decimal" use="required"/>
+        <xs:attribute name="max" type="xs:float" use="required"/>
         <xs:attribute name="lmax" type="type_osc_range_limits" use="required"/>
       </xs:extension>
     </xs:complexContent>
@@ -1554,7 +1566,7 @@ int value range: MIN to +INFINITY
         <xs:sequence>
           <xs:element name="hints" type="type_osc_hints_f" maxOccurs="1" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute name="min" type="xs:decimal" use="required"/>
+        <xs:attribute name="min" type="xs:float" use="required"/>
         <xs:attribute name="lmin" type="type_osc_range_limits" use="required"/>
       </xs:extension>
     </xs:complexContent>
@@ -1596,7 +1608,7 @@ int value range: MIN to +INFINITY
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="type_osc_range_d_inf">
-        <xs:attribute name="max" type="xs:decimal" use="required"/>
+        <xs:attribute name="max" type="xs:double" use="required"/>
         <xs:attribute name="lmax" type="xs:string" use="required"/>
       </xs:extension>
     </xs:complexContent>
@@ -1625,7 +1637,7 @@ int value range: MIN to +INFINITY
         <xs:sequence>
           <xs:element name="hints" type="type_osc_hints_d" maxOccurs="1" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute name="min" type="xs:decimal" use="required"/>
+        <xs:attribute name="min" type="xs:double" use="required"/>
         <xs:attribute name="lmin" type="type_osc_range_limits" use="required"/>
       </xs:extension>
     </xs:complexContent>
@@ -1643,9 +1655,9 @@ int value range: MIN to +INFINITY
           <xs:element name="hints" type="type_osc_hints_d" maxOccurs="1" minOccurs="0"/>
           <xs:element name="grid" type="type_osc_grid_d" maxOccurs="1" minOccurs="0"/>
         </xs:choice>
-        <xs:attribute name="min" type="xs:decimal" use="required"/>
+        <xs:attribute name="min" type="xs:double" use="required"/>
         <xs:attribute name="lmin" type="type_osc_range_limits" use="required"/>
-        <xs:attribute name="max" type="xs:decimal" use="required"/>
+        <xs:attribute name="max" type="xs:double" use="required"/>
         <xs:attribute name="lmax" type="type_osc_range_limits" use="required"/>
       </xs:extension>
     </xs:complexContent>
@@ -1662,7 +1674,7 @@ int value range: MIN to +INFINITY
         <xs:sequence>
           <xs:element name="hints" type="type_osc_hints_d" maxOccurs="1" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute name="min" type="xs:decimal" use="required"/>
+        <xs:attribute name="min" type="xs:double" use="required"/>
         <xs:attribute name="lmin" type="type_osc_range_limits" use="required"/>
       </xs:extension>
     </xs:complexContent>
@@ -1768,7 +1780,7 @@ int value range: MIN to +INFINITY
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="type_osc_point">
-        <xs:attribute name="value" type="xs:decimal" use="required"/>
+        <xs:attribute name="value" type="xs:float" use="required"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -1781,7 +1793,7 @@ int value range: MIN to +INFINITY
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="type_osc_point">
-        <xs:attribute name="value" type="xs:decimal" use="required"/>
+        <xs:attribute name="value" type="xs:double" use="required"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
