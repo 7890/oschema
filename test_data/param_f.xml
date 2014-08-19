@@ -18,7 +18,7 @@
 <!-- ranges -->
 	<message_in pattern="/b/path/in" typetag="f">
 		<param_f symbol="s_i1">
-			<range_min_max min="0" lmin="[" max="10" lmax="]"/>
+			<range_min_max min="0" lmin="[" max="10.1" lmax="]"/>
 		</param_f>
 	</message_in>
 	<message_in pattern="/c/path/in" typetag="f">
@@ -30,7 +30,7 @@
 	<message_in pattern="/d/path/in" typetag="f">
 		<param_f symbol="s_i1">
 <!-- max exclusive -->
-			<range_inf_max max="10" lmax="[" default="3"/>
+			<range_inf_max max="10" lmax="[" default=".3"/>
 		</param_f>
 	</message_in>
 	<message_in pattern="/e/path/in" typetag="f">
@@ -49,7 +49,7 @@
 	</message_out>
 	<message_out pattern="/c/path/out" typetag="f">
 		<param_f symbol="s_i1">
-			<range_min_max min="0" lmin="[" max="10" lmax="]" default="3"/>
+			<range_min_max min="0.1E-10" lmin="[" max="10" lmax="]" default="3"/>
 		</param_f>
 	</message_out>
 	<message_out pattern="/d/path/out" typetag="f">
